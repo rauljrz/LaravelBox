@@ -1,0 +1,58 @@
+version: "3.9"
+services:
+  laravel:
+    build: ./conf.d
+    container_name: laravel
+    environment:
+      PHP_OPCACHE_ENABLE: 0
+      PRODUCTION: 0
+    ports:
+      - 80:80
+    volumes:
+      - ./laravel:/opt/laravel
+
+  mysql:
+    image: mysql:8.0.1
+    container_name: mysql
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpassword
+    volumes:
+      - ./conf.d/mysql-data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin_laravel
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - 8891:80
+    environment:
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=secret
+      
+  redis:
+    image: redis:alpine
+    container_name: redis_laravel_enviroment
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    command: redis-server --appendonly yes --replica-read-only no
+     
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog_laravel_enviroment
+    ports:
+      - 1025:1025
+      - 8025:8025
+         
+volumes:
+  storage-data:
