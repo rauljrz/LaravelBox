@@ -2,7 +2,7 @@ version: "3.9"
 services:
   laravel:
     build: ./conf.d
-    container_name: laravel
+    container_name: app 
     environment:
       PHP_OPCACHE_ENABLE: 0
       PRODUCTION: 0
@@ -28,7 +28,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin_laravel
+    container_name: phpmyadmin
     restart: always
     depends_on:
       - mysql
@@ -41,7 +41,7 @@ services:
       
   redis:
     image: redis:alpine
-    container_name: redis_laravel_enviroment
+    container_name: redis
     restart: unless-stopped
     ports:
       - 6379:6379
@@ -49,7 +49,7 @@ services:
      
   mailhog:
     image: mailhog/mailhog:latest
-    container_name: mailhog_laravel_enviroment
+    container_name: mailhog
     ports:
       - 1025:1025
       - 8025:8025

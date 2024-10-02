@@ -2,25 +2,25 @@
 ![LaravelBox](https://raw.githubusercontent.com/rauljrz/LaravelBox/main/docs/banner.png)  
 # LaravelBox 🚀📦  
 
-### The ultimate setup for Laravel + Alpine + NGINX + PHP-FPM + OPCache + Docker
+### The perfect container for your Laravel projects + Alpine + NGINX + PHP-FPM + OPCache + Docker
 
-Welcome to **LaravelBox**! This repo provides an easy and optimized recipe for deploying Laravel 11 applications with Docker. 📈  
-Packed with Laravel 11, Alpine, Nginx, PHP-FPM, Supervisor, and OPCache, it's fast, efficient, and ready for action! 🚀
+Welcome to **LaravelBox**! This repository is your go-to recipe for deploying Laravel 11 applications with Docker, made simple and optimized. 📈  
+It includes Laravel 11, Alpine, Nginx, PHP-FPM, Supervisor, and OPCache to ensure lightning-fast performance 🚀.
 
-## 🚀 Getting Started
+## 🚀 Let's get started!
 
-Clone the repo, and you’re good to go! All you need is Docker installed on your machine.  
-Feel free to customize it any way you want. 😎 Just follow the steps below to get it up and running in your local environment and give it a try!
+Clone this repo, and you’re all set! All you need is Docker installed to run LaravelBox.  
+It’s super flexible, tweak it, adjust it, and customize it to your heart’s content. 😎 Just follow the steps to set it up in your local environment and give it a try.
 
 ---
 
 ## 🧰 Prerequisites
-The only thing you need is **Docker**. If you don’t have it yet, grab it from the [official Docker website](https://www.docker.com/get-started).  
-Don’t worry, it’s easy and free to install. 😜
+The only thing you need is **Docker** installed on your machine. If you don’t have it yet, download it from the [official Docker website](https://www.docker.com/get-started).  
+No worries! It’s easy to install and, of course, free. 😜
 
 ---
 
-## 🛠️ Installation Steps
+## 🛠️ Step-by-step installation
 
 1. **Clone** this repository to your local machine:
 
@@ -40,39 +40,89 @@ Don’t worry, it’s easy and free to install. 😜
     docker-compose up -d --build
     ```
 
-4. Voilà! Access your Laravel app at [http://localhost:8080](http://localhost:8080). 🎉
+4. Install Laravel inside Docker:
+
+    ```bash
+    docker exec -it app /opt/install.sh
+    ```
+
+5. 🎉 Bingo! Access your Laravel app at [http://localhost:80](http://localhost:80).
+
+6. Access PHPMyAdmin at [http://localhost:8891](http://localhost:8891). 
+
+---
+
+## 📁 Working directory
+
+```
+laravel
+```
 
 ---
 
 ## 🧳 What’s in the box? 📦
 
-LaravelBox comes fully loaded with everything you need to get your Laravel app running smoothly:
+LaravelBox is packed with everything you need to get your Laravel project flying:
 
 - **🐧 Alpine Linux**: A super lightweight Linux distribution as the base image.
-- **👨‍💼 Supervisor**: Process control to handle multiple processes without blowing up 💥.
-- **💻 Nginx**: The web server that serves your Laravel application.
-- **⚡ PHP-FPM**: For lightning-fast PHP request handling.
-- **💾 OPCache**: PHP opcode caching for that extra performance boost 🚀.
+- **👨‍💼 Supervisor**: Process control to manage multiple processes without stress 💥.
+- **💻 Nginx**: The web server that powers your Laravel app.
+- **⚡ PHP-FPM**: Handles PHP requests at lightning speed.
+- **💾 OPCache**: Opcode cache for that extra turbo performance boost 🚀.
 
 ---
 
 ## 🎨 Customization
 
-LaravelBox is yours to tweak! Just paste your Laravel app code into the `laravel` directory and you’re ready to go.  
-Or if you prefer, copy only the following files to your project:
+LaravelBox is yours to modify! Just drop your Laravel code into the `laravel` directory, and you’re good to go.  
+Alternatively, you can copy just the following files into your project:
 
 - `Dockerfile`
 - `entrypoint.sh`
 - `conf.d`
 
-It should work just fine! Easy peasy, right? 😎
+It should work perfectly. Easy peasy, right? 😎
+
+Inside the `conf.d` folder, the `install.sh` script performs a clean installation of Laravel, setting up `.env.example` and `.env` with the following details:
+
+```
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=secret
+```
+
+⚠️ **Heads up!** Make sure these details match the *mysql* configuration in your `docker-compose.yml` file.
 
 ---
 
-## 🤝 Contributing
+## ⚡ Handy aliases to speed up your workflow
 
-Contributions are more than welcome! 💡  
-Got an idea or improvement? Feel free to reach out to me. Fork this repo, make your changes, and send a **PR**. Let’s connect and grow this project together! 💪
+Here are some aliases to help you run commands faster:
+
+```
+alias dca='docker compose run --rm artisan'
+alias dcc='docker compose run --rm composer'
+alias dc='docker compose'
+alias dup='docker compose up -d --build'
+alias ddown='docker compose down'
+```
+
+**Example usage:**
+
+```
+dca config:cache
+dcc dump
+```
+
+---
+
+## 🤝 Contributions
+
+All ideas and improvements are more than welcome! 💡  
+If you have any suggestions, feel free to reach out. Fork the repo, make your changes, and submit a **PR**. Let’s connect and grow this project together! 💪
 
 ---
 
@@ -84,7 +134,7 @@ Got an idea or improvement? Feel free to reach out to me. Fork this repo, make y
 
 ## 📜 License
 
-This project is open-source and licensed under the **MIT** license. For more details, check out the [LICENSE](LICENSE) file.
+This project is licensed under the **MIT** license, which means you can use it freely. For more information, check out the [LICENSE](LICENSE) file.  
 
 ---
 
