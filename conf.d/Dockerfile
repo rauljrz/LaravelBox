@@ -1,21 +1,33 @@
 FROM php:8.3-fpm-alpine
 
+# Por defecto se utiliza la timezone de Buenos Aires
+ENV TZ=America/Argentina/Buenos_Aires
+
 # Set working directory
 WORKDIR /opt/laravel
 
 # Install additional packages
-RUN apt-get -y update
-RUN apk --no-cache add \
-    nginx \
-    supervisor \
-    npm \
-    vim \
-    git \
-    mc ca-certificates zip unzip
+RUN apk update && \
+    apk --no-cache add \
+        autoconf \
+        gcc \
+        g++ \
+        make \
+        nginx \
+        supervisor \
+        npm \
+        vim \
+        git \
+        mc \
+        ca-certificates \
+        linux-headers && \
+        docker-php-ext-enable opcache && \
+        apk --no-cache add mysql-client && \
+        docker-php-ext-install pdo pdo_mysql && \
+        pecl install xdebug && \
+        docker-php-ext-enable xdebug
 
-RUN apt-get -y autoremove \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Enable opcache extension
 RUN docker-php-ext-enable opcache
@@ -30,7 +42,6 @@ COPY mysql/my.cnf /etc/mysql/my.cnf
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN pecl install redis && docker-php-ext-enable redis
-RUN pecl install xdebug-2.9.6 && docker-php-ext-enable xdebug
 # Copy Nginx configuration
 COPY nginx/default.conf /etc/nginx/nginx.conf
 

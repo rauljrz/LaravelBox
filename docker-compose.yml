@@ -1,8 +1,9 @@
 version: "3.9"
 services:
-  laravel:
+  php-fpm:
     build: ./conf.d
-    container_name: app 
+    container_name: app
+    image: app-laravel
     environment:
       PHP_OPCACHE_ENABLE: 0
       PRODUCTION: 0
@@ -40,7 +41,7 @@ services:
       - PMA_PASSWORD=secret
       
   redis:
-    image: redis:4.0.5-alpine
+    image: redis:alpine
     container_name: redis
     restart: unless-stopped
     ports:
