@@ -4,11 +4,18 @@ FROM php:8.3-fpm-alpine
 WORKDIR /opt/laravel
 
 # Install additional packages
+RUN apt-get -y update
 RUN apk --no-cache add \
     nginx \
     supervisor \
     npm \
-    vim
+    vim \
+    git \
+    mc ca-certificates zip unzip
+
+RUN apt-get -y autoremove \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Enable opcache extension
 RUN docker-php-ext-enable opcache
@@ -22,6 +29,8 @@ COPY mysql/my.cnf /etc/mysql/my.cnf
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+RUN pecl install redis && docker-php-ext-enable redis
+RUN pecl install xdebug-2.9.6 && docker-php-ext-enable xdebug
 # Copy Nginx configuration
 COPY nginx/default.conf /etc/nginx/nginx.conf
 

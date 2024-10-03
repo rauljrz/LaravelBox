@@ -40,7 +40,7 @@ services:
       - PMA_PASSWORD=secret
       
   redis:
-    image: redis:alpine
+    image: redis:4.0.5-alpine
     container_name: redis
     restart: unless-stopped
     ports:
