@@ -1,0 +1,9 @@
+rm -rf laravel && sudo rm -rf conf.d/mysql-data/ && git restore laravel/.gitkeep conf.d/mysql/my.cnf
+
+rm -rf laravel && mkdir laravel && sudo rm -rf conf.d/mysql-data/ 
+git restore laravel/.gitkeep conf.d/mysql/my.cnf
+
+docker compose down
+docker compose up -d --build
+
+docker exec -it app /bin/sh
